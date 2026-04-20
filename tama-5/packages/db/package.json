@@ -1,0 +1,28 @@
+{
+	"name": "@app/db",
+	"version": "0.1.0",
+	"main": "./index.ts",
+	"types": "./index.ts",
+	"license": "MIT",
+	"scripts": {
+		"generate": "prisma generate",
+		"migrate": "prisma migrate dev",
+		"studio": "prisma studio",
+		"localdb": "prisma dev",
+		"reset":"prisma migrate reset"
+	},
+	"dependencies": {
+		"@prisma/adapter-pg": "^7.7.0",
+		"@prisma/client": "^7.7.0",
+		"pg": "^8.20.0"
+	},
+	"devDependencies": {
+		"@prisma/client": "^7.7.0",
+		"@types/pg": "^8.20.0",
+		"dotenv": "^17.4.2",
+		"prisma": "^7.7.0"
+	},
+	"exports": {
+		".": "./index.ts"
+	}
+}

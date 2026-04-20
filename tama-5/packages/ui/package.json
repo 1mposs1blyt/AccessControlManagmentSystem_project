@@ -1,0 +1,9 @@
+{
+    "name": "@app/ui",
+    "version": "1.0.0",
+    "main": "src/tamagui.config.ts",
+    "dependencies": {
+        "@tamagui/config": "^2.0.0-rc.41",
+        "tamagui": "^2.0.0-rc.41"
+    }
+}

@@ -1,0 +1,29 @@
+{
+  "expo": {
+    "name": "solito-blank",
+    "slug": "solito-blank",
+    "version": "1.0.0",
+    "scheme": "solito-blank",
+    "platforms": [
+      "ios",
+      "android"
+    ],
+    "userInterfaceStyle": "automatic",
+    "android": {
+      "package": "com.alex.tama5",
+      "userInterfaceStyle": "automatic"
+    },
+    "ios": {
+      "supportsTablet": true,
+      "userInterfaceStyle": "automatic",
+      "bundleIdentifier": "com.alex.tama5"
+    },
+    "newArchEnabled": true,
+    "experiments": {
+      "reactCanary": true
+    },
+    "plugins": [
+      "expo-asset"
+    ]
+  }
+}
