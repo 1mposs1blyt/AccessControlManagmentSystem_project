@@ -1,25 +1,25 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
-
-import { HomeScreen } from 'app/features/home/screen'
-import { UserDetailScreen } from 'app/features/user/screen'
-import { SettingsScreen } from 'app/features/settings/screen'
-import { AboutScreen } from 'app/features/about/screen'
+import { AuthScreen } from 'app/features/auth/screen'
+import { CheckinScreen } from 'app/features/checkin/screen'
+import { MainScreen } from 'app/features/main/screen'
 import { useTheme } from 'tamagui'
-import { UsersListScreen } from 'app/features/userlist/screen'
-import { CanvasScreen } from 'app/features/canvas/screen'
+import { useState, useEffect } from "react"
+import { useAuthStore } from 'app/features/auth/store'
 const Stack = createNativeStackNavigator<{
-  home: undefined
-  settings: undefined
-  profile: { id: string }
-  about: undefined
-  canvas:undefined
-  usersList:undefined
+  main: undefined
+  auth: undefined
+  checkin: undefined
 }>()
 
 export function NativeNavigation() {
-
-  // Внутри компонента навигатора:
   const theme = useTheme()
+  const isAuthenticated = useAuthStore((state) => state.isAuthenticated)
+  const [isReady, setIsReady] = useState(false)
+
+  useEffect(() => {
+    setIsReady(true)
+  }, [])
+  if (!isReady) return null
   return (
     <Stack.Navigator
       screenOptions={{
@@ -28,37 +28,28 @@ export function NativeNavigation() {
         },
         headerTintColor: theme.color.get(),
       }}>
-      <Stack.Screen
-        name="home"
-        component={HomeScreen}
-        options={{ title: 'Home' }}
-      />
-      <Stack.Screen
-        name="settings"
-        component={SettingsScreen}
-        options={{ title: 'Настройки' }}
-      />
-      <Stack.Screen
-        name="profile"
-        component={UserDetailScreen}
-        options={{ title: 'Пользователь' }}
-      />
-      <Stack.Screen
-        name="about"
-        component={AboutScreen}
-        options={{ title: 'О приложении' }}
-      />
-      <Stack.Screen
-        name="usersList"
-        component={UsersListScreen}
-        options={{title:"Пользователи"}}
-      />
-      <Stack.Screen
-        name="canvas"
-        component={CanvasScreen}
-        options={{title:"Infinity canvas"}}
-      />
-
+      {
+        isAuthenticated ? (
+          <>
+            <Stack.Screen
+              name="main"
+              component={MainScreen}
+              options={{ title: 'Home' }}
+            />
+            <Stack.Screen
+              name="checkin"
+              component={CheckinScreen}
+              options={{ title: 'Auth' }}
+            />
+          </>
+        ) : (
+          <Stack.Screen
+            name="auth"
+            component={AuthScreen}
+            options={{ title: 'Auth' }}
+          />
+        )
+      }
     </Stack.Navigator>
   )
 }

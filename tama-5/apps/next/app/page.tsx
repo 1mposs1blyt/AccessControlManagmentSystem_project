@@ -1,3 +1,4 @@
 'use client'
 
-export { HomeScreen as default } from 'app/features/home/screen'
+export { MainScreen as default } from 'app/features/main/screen'
+//export { AuthScreen as default } from 'app/features/auth/screen'

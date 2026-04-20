@@ -17,16 +17,9 @@ export function NavigationProvider({
           prefixes: [Linking.createURL('/')],
           config: {
             screens: {
-              home: '',
-              settings: 'settings',
-              profile: {
-                path: 'profile/:id',
-                initialRouteName: undefined,
-                exact: true,
-              },
-              about: 'about',
-              usersList: "usersList",
-              canvas: "canvas"
+              main: "",
+              auth: "/auth",
+              checkin: "/checkin"
             },
           },
         }) as any,

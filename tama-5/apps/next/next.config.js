@@ -85,7 +85,6 @@ const withTurpopack = {
       '.web.jsx',
       '.web.ts',
       '.web.tsx',
-
       '.js',
       '.mjs',
       '.tsx',
@@ -102,6 +101,7 @@ const withTurpopack = {
  * @type {import('next').NextConfig}
  */
 const nextConfig = {
+  allowedDevOrigins: ['10.1.30.203',"*"],
   transpilePackages: [
     'solito',
     'expo-haptics',
