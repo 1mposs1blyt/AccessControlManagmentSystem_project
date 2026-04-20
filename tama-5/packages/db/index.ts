@@ -5,7 +5,7 @@ import { PrismaPg } from '@prisma/adapter-pg'
 import { Pool } from 'pg'
 
 // Добавим проверку process.env.DATABASE_URL ||
-const connectionString = "postgresql://postgres:123456@localhost:5432/mynewdb"
+const connectionString = "postgresql://postgres:123456@localhost:5432/ACMS"
 console.log(connectionString)
 if (!connectionString) {
   throw new Error("DATABASE_URL is not defined in environment variables")
