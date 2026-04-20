@@ -20,9 +20,17 @@ export const useAuthStore = create<AuthState>()(
     }),
     {
       name: 'auth-storage', // уникальное имя ключа в хранилище
-      storage: createJSONStorage(() => 
+      storage: createJSONStorage(() =>
         Platform.OS === 'web' ? localStorage : AsyncStorage
       ),
+      partialize: (state) => ({
+        isAuthenticated: state.isAuthenticated,
+        user: state.user ? {
+          id: state.user.id,
+          role: state.user.role,
+          name: state.user.name,
+        } : null,
+      }),
     }
   )
 )
