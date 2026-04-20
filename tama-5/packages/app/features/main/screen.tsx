@@ -4,17 +4,24 @@ import { useAuthStore } from "app/features/auth/store"
 import { H2, Paragraph, SizableText } from "tamagui"
 import { ScrollView } from "react-native"
 import { XStack, H4 } from "tamagui"
-
+import { Platform } from "react-native"
 export function MainScreen() {
 	const user = useAuthStore((state) => state.user)
 	const logout = useAuthStore((state) => state.logout)
 	return (
 		<YStack f={1} bg="$background">
 			{/* Общая шапка для всех */}
+			{
+				Platform.OS === "web" ? (
 			<XStack p="$4" jc="space-between" ai="center" bbw={1} bc="$borderColor">
-				<H4>Access Control</H4>
-				<SizableText size="$2">Вы вошли как: {user?.role}</SizableText>
+				<H4>Панель доступа</H4>
+				{
+					user?.role === "ADMIN" ? (<SizableText size="$2">Вы вошли как {user?.role == "ADMIN" ? "администратор":""}</SizableText>) : null
+				}
 			</XStack>
+				) : null
+			}
+
 
 			{/* Условный контент на основе роли */}
 			<ScrollView>
