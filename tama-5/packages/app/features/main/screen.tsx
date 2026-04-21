@@ -195,7 +195,7 @@ const UserList = () => {
   }
   return (
     <YStack f={1} p="$4" space="$2">
-      <MyDatePicker onDateChange={handleDateChange} />
+      <MyDatePicker currentDate={date} onDateChange={handleDateChange} />
       <Paragraph mb="$3" textAlign="start">Список пользователей:</Paragraph>
       {error && <Paragraph color="$red10">{error}</Paragraph>}
       {loading ?
