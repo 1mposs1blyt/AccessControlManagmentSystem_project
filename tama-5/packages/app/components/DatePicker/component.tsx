@@ -23,21 +23,15 @@ export function MyDatePicker({ currentDate, onDateChange }: { currentDate: Date,
           icon={ChevronLeft} 
           onPress={() => shiftDate(-1)} 
           hoverStyle={{ scale: 1.1 }}
+          theme="blue"
         />
 
         <View pos="relative">
-          {/* Основная кнопка отображения даты */}
           <Button 
             icon={Calendar} 
             minWidth={180} 
             size="$4"
             theme="blue"
-            onPress={() => {
-              if (Platform.OS !== 'web') {
-                // На мобилке просто выводим сообщение или оставляем кнопки-стрелки
-                console.log('Используйте стрелки для смены даты')
-              }
-            }}
           >
             {currentDate.toLocaleDateString('ru-RU', { 
               day: 'numeric', 
@@ -45,8 +39,6 @@ export function MyDatePicker({ currentDate, onDateChange }: { currentDate: Date,
               year: currentDate.getFullYear() !== new Date().getFullYear() ? 'numeric' : undefined 
             })}
           </Button>
-
-          {/* ВЕБ: Стандартный HTML5 инпут прямо поверх кнопки */}
           {Platform.OS === 'web' && (
             <input
               type="date"
@@ -65,18 +57,15 @@ export function MyDatePicker({ currentDate, onDateChange }: { currentDate: Date,
             />
           )}
         </View>
-
-        {/* Кнопка "День вперед" */}
         <Button 
           circular 
           size="$4" 
+          theme="blue"
           icon={ChevronRight} 
           onPress={() => shiftDate(1)}
           hoverStyle={{ scale: 1.1 }}
         />
       </XStack>
-
-      {/* Быстрая кнопка возврата на "Сегодня" */}
       <XStack space="$2">
         <Button 
           size="$2" 
