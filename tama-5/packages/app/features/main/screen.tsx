@@ -1,5 +1,5 @@
 'use client'
-import { H1, YStack, Button } from "tamagui"
+import { YStack, Button } from "tamagui"
 import { useAuthStore } from "app/features/auth/store"
 import { H2, Paragraph, SizableText, Spinner } from "tamagui"
 import { ScrollView } from "react-native"
@@ -7,6 +7,9 @@ import { XStack, H4 } from "tamagui"
 import { Platform } from "react-native"
 import { getBaseUrl } from "app/utils/util"
 import { useEffect, useState } from "react"
+import { MyDatePicker } from "app/components/DatePicker/component"
+
+
 interface Checkin {
   id: number
   type: string
@@ -95,12 +98,14 @@ const AdminDashboard = () => {
       console.error('🔥 Сетевая ошибка:', err);
     }
   };
+
   return (
     <YStack space="$4" p="$4">
       { /*<Button mb="$4" onPress={() => alert("Заглушка.Запрос в коде!")}>Добавить пользователя</Button>*/}
       {/*<Button mb="$4" onPress={() => createUser()}>Добавить пользователя</Button>*/}
       <H2>Панель администратора</H2>
       <Paragraph>Список всех пользователей системы:</Paragraph>
+
     </YStack>
   )
 }
@@ -115,14 +120,18 @@ const UserHome = () => (
   </YStack>
 )
 const UserList = () => {
-
+  const [date, setdate] = useState(new Date())
   const [users, setUsers] = useState<User[]>()
   const [error, setError] = useState<string>();
   const [loading, setLoading] = useState<boolean>(true);
+  const handleDateChange = (newDate: Date) => {
+    setdate(newDate)
+  }
   useEffect(() => {
     const GetUsers = async () => {
       setLoading(true)
-      const url = `${getBaseUrl()}/api/users`
+      const dateStr = date.toISOString().split('T')[0]
+      const url = `${getBaseUrl()}/api/users?date=${dateStr}`
       try {
         const response = await fetch(url, {
           method: 'GET',
@@ -152,7 +161,7 @@ const UserList = () => {
       }
     }
     GetUsers()
-  }, [])
+  }, [date])
   const updateLocalUserStatus = (userId: number, newCheckin: any) => {
     setUsers((prev: any) => {
       return prev.map((u: User) => {
@@ -169,13 +178,24 @@ const UserList = () => {
     }
     return users.map((u) => {
       if (u.role === 'ADMIN') {
-        return <User key={u.id} u={u} onStatusUpdate={updateLocalUserStatus} />
+        return <User
+          key={u.id}
+          u={u}
+          onStatusUpdate={updateLocalUserStatus}
+          selectedDate={date} // <-- Передаем дату из стейта календаря
+        />
       }
-      return <User key={u.id} u={u} onStatusUpdate={updateLocalUserStatus} />
+      return <User
+        key={u.id}
+        u={u}
+        onStatusUpdate={updateLocalUserStatus}
+        selectedDate={date} // <-- Передаем дату из стейта календаря
+      />
     })
   }
   return (
     <YStack f={1} p="$4" space="$2">
+      <MyDatePicker onDateChange={handleDateChange} />
       <Paragraph mb="$3" textAlign="start">Список пользователей:</Paragraph>
       {error && <Paragraph color="$red10">{error}</Paragraph>}
       {loading ?
@@ -185,12 +205,21 @@ const UserList = () => {
     </YStack>
   )
 }
-const User = ({ u, onStatusUpdate }: { u: User, onStatusUpdate: any }) => {
+const User = ({ u, onStatusUpdate, selectedDate }: { u: User, onStatusUpdate: any, selectedDate: Date }) => {
   const lastCheckin = u.checkins && u.checkins.length > 0 ? u.checkins[0] : null
   const isPresent = lastCheckin?.type
   const Type = lastCheckin?.type
   const handleCheckin = async (userId: number, type: 'IN' | 'OUT' | 'NONE') => {
     try {
+      const dateToSave = new Date(selectedDate)
+      const now = new Date()
+
+      if (dateToSave.toDateString() === now.toDateString()) {
+        dateToSave.setHours(now.getHours(), now.getMinutes(), now.getSeconds())
+      } else {
+        dateToSave.setHours(12, 0, 0)
+      }
+
       const response = await fetch(`${getBaseUrl()}/api/checkin`, {
         method: 'POST',
         cache: 'no-store',
@@ -198,7 +227,8 @@ const User = ({ u, onStatusUpdate }: { u: User, onStatusUpdate: any }) => {
         body: JSON.stringify({
           userId,
           type,
-          method: 'MANUAL'
+          method: 'MANUAL',
+          createdAt: selectedDate.toISOString(),
         }),
       })
       const data = await response.json()

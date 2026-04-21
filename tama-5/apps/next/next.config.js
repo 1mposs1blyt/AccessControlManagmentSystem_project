@@ -37,7 +37,7 @@ const withWebpack = {
       // Внутренние библиотеки React Native
       'react-native/Libraries/TurboModule/TurboModuleRegistry': path.resolve(__dirname, stubPath),
       'react-native/Libraries/Utilities/codegenNativeComponent': path.resolve(__dirname, stubPath),
-      
+
       'react-native/Libraries/EventEmitter/RCTDeviceEventEmitter$':
         'react-native-web/dist/vendor/react-native/NativeEventEmitter/RCTDeviceEventEmitter',
       'react-native/Libraries/vendor/emitter/EventEmitter$':
@@ -74,7 +74,7 @@ const withTurpopack = {
       '@tamagui/core': '../../node_modules/@tamagui/core',
       'react': '../../node_modules/react',
       'react-dom': '../../node_modules/react-dom',
-      
+
       // Остальные ваши алиасы
       'react-native/Libraries/Utilities/codegenNativeComponent': stubPath,
       'react-native/Libraries/TurboModule/TurboModuleRegistry': stubPath,
@@ -101,7 +101,7 @@ const withTurpopack = {
  * @type {import('next').NextConfig}
  */
 const nextConfig = {
-  allowedDevOrigins: ['10.1.30.203',"*"],
+  allowedDevOrigins: ['10.1.30.203', "*"],
   transpilePackages: [
     'solito',
     'expo-haptics',
@@ -115,6 +115,7 @@ const nextConfig = {
     'react-native-worklets-core',
     'react-native-svg-web',
     '@tamagui/lucide-icons',
+    '@react-native-community/datetimepicker',
   ],
 
   compiler: {

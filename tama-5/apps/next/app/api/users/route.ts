@@ -3,12 +3,10 @@ import { prisma } from '@app/db'
 
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url)
-  const dateParam = searchParams.get('date') // Получим "2023-10-25"
+  const dateParam = searchParams.get('date')
 
-  // Создаем объект даты из параметра или берем текущий момент
   const targetDate = dateParam ? new Date(dateParam) : new Date()
 
-  // Устанавливаем границы дня строго по местному времени
   const startOfDay = new Date(targetDate)
   startOfDay.setHours(0, 0, 0, 0)
 
