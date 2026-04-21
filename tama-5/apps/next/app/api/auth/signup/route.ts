@@ -5,7 +5,7 @@ import jwt from 'jsonwebtoken'
 
 export async function POST(request: Request) {
   try {
-    const { email, password, name } = await request.json()
+    const { email, password, name, role } = await request.json()
 
     const existingUser = await prisma.user.findUnique({
       where: { email },
@@ -25,7 +25,7 @@ export async function POST(request: Request) {
         email,
         name,
         password: hashedPassword,
-        role: 'USER', // Роль по умолчанию
+        role: role, // Роль по умолчанию
       },
     })
 

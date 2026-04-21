@@ -2,14 +2,12 @@
 import { useState } from 'react'
 import {
 	Button,
-	Form,
 	H2,
 	Input,
 	Label,
 	Paragraph,
 	SizableText,
 	YStack,
-	AnimatePresence
 } from 'tamagui'
 import { KeyboardAvoidingView, Platform, ScrollView } from 'react-native'
 import { getBaseUrl } from 'app/utils/util'
@@ -17,8 +15,9 @@ import { useAuthStore } from 'app/features/auth/store'
 
 export function AuthScreen() {
 	const setIsAuthenticated = useAuthStore((state) => state.login)
-	const [email, setEmail] = useState('')
-	const [password, setPassword] = useState('')
+	const [error,setError] = useState<string>();
+	const [email, setEmail] = useState<string>('')
+	const [password, setPassword] = useState<string>('')
 	const [status, setStatus] = useState<'idle' | 'loading' | 'error'>('idle')
 	const handleLogin = async () => {
 		setStatus('loading')
@@ -33,6 +32,8 @@ export function AuthScreen() {
 			const data = await response.json()
 
 			if (!response.ok) {
+				setError(data.error)
+				setTimeout(()=>{setError('')},1800)
 				throw new Error(data.error || 'Ошибка входа')
 			}
 			console.log('Успех:', data.user)
@@ -115,6 +116,9 @@ export function AuthScreen() {
 						onPress={() => console.log('Forgot password')}
 					>
 						Забыли пароль?
+					</SizableText>
+					<SizableText color="$red10">
+						{error}
 					</SizableText>
 				</YStack>
 			</ScrollView>
