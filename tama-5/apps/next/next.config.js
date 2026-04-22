@@ -116,6 +116,9 @@ const nextConfig = {
     'react-native-svg-web',
     '@tamagui/lucide-icons',
     '@react-native-community/datetimepicker',
+    'expo-camera',
+    'expo-modules-core', // Добавить
+    'expo-asset',
   ],
 
   compiler: {

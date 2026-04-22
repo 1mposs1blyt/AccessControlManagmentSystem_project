@@ -11,7 +11,7 @@ import {
 } from 'tamagui'
 import { KeyboardAvoidingView, Platform, ScrollView } from 'react-native'
 import { getBaseUrl } from 'app/utils/util'
-import { useAuthStore } from 'app/features/auth/store'
+import { useAuthStore } from 'app/stores/store'
 
 export function AuthScreen() {
 	const setIsAuthenticated = useAuthStore((state) => state.login)

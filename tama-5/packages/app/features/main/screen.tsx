@@ -1,18 +1,18 @@
 'use client'
 import { YStack, Button } from "tamagui"
-import { useAuthStore } from "app/features/auth/store"
+import { useAuthStore } from "app/stores/store"
 import { SizableText } from "tamagui"
 import { XStack, H4 } from "tamagui"
 import { Platform } from "react-native"
 
 import { AdminScreen } from "./components/admin/AdminScreen"
-import { UserHome } from "./components/user/UserHome"
+import { CheckinScreen } from "../checkin/screen"
 
 export function MainScreen() {
   const user = useAuthStore((state) => state.user)
   const logout = useAuthStore((state) => state.logout)
   return (
-    <YStack f={1} bg="$background">
+    <YStack  f={1} bg="$background">
       {
         Platform.OS === "web" ? (
           <XStack p="$4" jc="space-between" ai="center" bbw={1} bc="$borderColor">
@@ -23,7 +23,7 @@ export function MainScreen() {
           </XStack>
         ) : null
       }
-      <YStack height="100%">
+      <YStack>
         <Button m="$4"
           color="$red10" bg="$red5"
           animation="bouncy"
@@ -43,7 +43,7 @@ export function MainScreen() {
         {user?.role === 'ADMIN' ? (
           <AdminScreen />
         ) : (
-          <UserHome />
+          <><CheckinScreen /></>
         )}
       </YStack>
     </YStack>

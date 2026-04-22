@@ -2,13 +2,13 @@ import type { User } from "../../types";
 import { MyDatePicker } from "app/components/DatePicker/component";
 import { getBaseUrl } from "app/utils/util";
 import { useState, useEffect } from "react";
-import { ScrollView } from "react-native";
-import { Paragraph, YStack, Spinner } from "tamagui";
+import { Paragraph, YStack, Spinner, ScrollView } from "tamagui";
 import { UserComp } from "app/features/main/components/admin/User"
+import { Platform } from "react-native";
 
 export const UserList = () => {
   const [date, setdate] = useState(new Date())
-  const [users, setUsers] = useState<User[]>()
+  const [users, setUsers] = useState<User[]>([])
   const [error, setError] = useState<string>();
   const [loading, setLoading] = useState<boolean>(true);
   const handleDateChange = (newDate: Date) => {
@@ -59,46 +59,55 @@ export const UserList = () => {
       });
     });
   }
-  const renderUsers = () => {
+  const RenderUsers = () => {
     if (!users || users.length === 0) {
       return <Paragraph>Пользователей нет</Paragraph>
     }
     return users.map((u) => {
-      if (u.role === 'ADMIN') {
-        return <UserComp
+      return (
+        <UserComp
           key={u.id}
           u={u}
           onStatusUpdate={updateLocalUserStatus}
-          selectedDate={date} // <-- Передаем дату из стейта календаря
+          selectedDate={date}
         />
-      }
-      return <UserComp
-        key={u.id}
-        u={u}
-        onStatusUpdate={updateLocalUserStatus}
-        selectedDate={date} // <-- Передаем дату из стейта календаря
-      />
+      )
     })
   }
   return (
-    <YStack f={1}>
-      <MyDatePicker currentDate={date} onDateChange={handleDateChange} />
-      <ScrollView
-        contentContainerStyle={{
-          padding: 16,
-          paddingBottom: 40
-        }}
-      >
-        {error && <Paragraph color="$red10" mb="$3">{error}</Paragraph>}
-        {loading ? (
-          <Spinner size="large" color="$blue10" p="$4" />
-        ) : (
-          <YStack space="$3">
-            {renderUsers()}
-          </YStack>
-        )}
-      </ScrollView>
-    </YStack>
+    <YStack f={1} width="100%" minHeight={Platform.OS === 'web' ? '100dvh' : '100%'}>
+      
+      {/* 1. Шапка (фиксированная) */}
+      <YStack p="$4" bg="$background" borderBottomWidth={1} bc="$borderColor">
+        <MyDatePicker currentDate={date} onDateChange={handleDateChange} />
+      </YStack>
 
+      {/* 2. Скролл-зона */}
+      {/* На вебе используем просто YStack со скроллом, на нативе - ScrollView */}
+      {Platform.OS === 'web' ? (
+        <YStack 
+          f={1} 
+          width="100%" 
+          style={{ overflowY: 'auto' }} // Чистый CSS скролл для браузера
+          p="$4"
+        >
+           <YStack space="$3" pb="$10">
+              {loading ? <Spinner size="large" color="$blue10" p="$4" /> : RenderUsers()}
+           </YStack>
+        </YStack>
+      ) : (
+        <ScrollView f={1} width="100%">
+          <YStack p="$4" space="$3" pb="$10">
+             {loading ? <Spinner size="large" color="$blue10" p="$4" /> : RenderUsers()}
+          </YStack>
+        </ScrollView>
+      )}
+
+      {error && (
+        <Paragraph pos="absolute" bottom={20} alignSelf="center" color="$red10" bg="$background" p="$2" br="$2">
+          {error}
+        </Paragraph>
+      )}
+    </YStack>
   )
 }

@@ -3,7 +3,7 @@ import { YStack, XStack,Button, SizableText } from "tamagui"
 import type { User } from "../../types"
 export const UserComp = ({ u, onStatusUpdate, selectedDate }: { u: User, onStatusUpdate: any, selectedDate: Date }) => {
   const lastCheckin = u.checkins && u.checkins.length > 0 ? u.checkins[0] : null
-  const isPresent = lastCheckin?.type
+  const isPresent = !!lastCheckin?.type 
   const Type = lastCheckin?.type
   const handleCheckin = async (userId: number, type: 'IN' | 'OUT' | 'NONE') => {
     try {
@@ -48,7 +48,6 @@ export const UserComp = ({ u, onStatusUpdate, selectedDate }: { u: User, onStatu
       animation="lazy"
       mb="$3"
       borderLeftColor={isAdmin ? "$purple10" : "$green10"}
-
     >
       <XStack pt="$2" pl="$2" jc="space-between" ai="flex-start" mb="$2">
         <YStack>
@@ -80,7 +79,6 @@ export const UserComp = ({ u, onStatusUpdate, selectedDate }: { u: User, onStatu
           {u.role}
         </SizableText>
       </XStack>
-
       <XStack
         mt="$2"
         pt="$2"

@@ -4,7 +4,7 @@ import { CheckinScreen } from 'app/features/checkin/screen'
 import { MainScreen } from 'app/features/main/screen'
 import { useTheme } from 'tamagui'
 import { useState, useEffect } from "react"
-import { useAuthStore } from 'app/features/auth/store'
+import { useAuthStore } from 'app/stores/store'
 const Stack = createNativeStackNavigator<{
   main: undefined
   auth: undefined

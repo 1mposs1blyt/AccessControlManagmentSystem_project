@@ -1,5 +1,5 @@
 'use client'
-import { useAuthStore } from 'app/features/auth/store'
+import { useAuthStore } from 'app/stores/store'
 import { AuthScreen } from 'app/features/auth/screen'
 import { useEffect, useState } from 'react'
 
