@@ -36,20 +36,21 @@ const EditField = ({ label, field, currentValue, isPassword = false, formData, s
 )
 
 export function UserEditScreen({ route }: any) {
+	const { push, back } = useRouter()
 	const params = useParams<{ id: string }>()
 	const rawPath = route?.path || ''
-	const idFromPath = rawPath.split('/').pop()
 
-	const id = [
-		params?.id,
-		route?.params?.id,
-		route?.path?.split('/').filter(Boolean).pop(), // берем последний кусок пути
-		route?.params?.screen // костыль для твоего лога, где цифра попала в screen
-	].find(v => v && v !== 'undefined' && !isNaN(Number(v)))
+	const id = Platform.OS === 'web'
+		? params?.id
+		: [
+			params?.id,
+			route?.params?.id,
+			route?.path?.split('/').filter(Boolean).pop(),
+			route?.params?.screen
+		].find(v => v && v !== 'undefined' && !isNaN(Number(v)))
 
 
 	console.log('Native route params:', route?.params);
-	const { push, back } = useRouter()
 	const [user, setUser] = useState<any>(null)
 	const [formData, setFormData] = useState<any>({})
 	const [loading, setLoading] = useState(true)
@@ -59,11 +60,10 @@ export function UserEditScreen({ route }: any) {
 	useEffect(() => {
 		if (!id || id === 'undefined' || isNaN(Number(id))) return
 
-		setLoading(true) // Обязательно сбрасываем перед запросом
+		setLoading(true)
 		fetch(`${getBaseUrl()}/api/users/${id}`)
 			.then(res => res.json())
 			.then(data => {
-				// Если данных нет, не зануляй всё сразу, посмотри в лог
 				if (data) {
 					setUser(data)
 				}
