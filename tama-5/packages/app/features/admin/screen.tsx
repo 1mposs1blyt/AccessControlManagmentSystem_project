@@ -1,7 +1,8 @@
 'use client'
+import { AdminDashboard } from "./components/AdminDashBoard"
 
-export function AdminScreen(){
-    return(
-        <>admin screen</>
+export const AdminScreen = () => {
+    return (
+        <AdminDashboard />
     )
 }

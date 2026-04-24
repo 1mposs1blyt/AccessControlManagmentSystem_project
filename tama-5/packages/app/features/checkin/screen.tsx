@@ -1,6 +1,6 @@
 'use client'
-import { H1,YStack } from "tamagui"
-import { UserHome } from "../checkin/components/user/UserScreen"
+import { YStack } from "tamagui"
+import { UserHome } from "./components/UserScreen"
 
 
 export function CheckinScreen() {

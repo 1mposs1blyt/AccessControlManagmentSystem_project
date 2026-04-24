@@ -2,6 +2,7 @@ import { create } from 'zustand'
 import { persist, createJSONStorage } from 'zustand/middleware'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { Platform } from 'react-native'
+import { User, UserState } from 'app/stores/types'
 
 interface AuthState {
   isAuthenticated: boolean
@@ -31,6 +32,25 @@ export const useAuthStore = create<AuthState>()(
           name: state.user.name,
         } : null,
       }),
+    }
+  )
+)
+
+export const useUserStore = create<UserState>()(
+  persist(
+    (set) => ({
+      users: [],
+      setUsers: (users) => set({ users }),
+      updateUser: (id, data) =>
+        set((state) => ({
+          users: state.users.map((u) => (u.id === id ? { ...u, ...data } : u)),
+        })),
+    }),
+    {
+      name: 'users-storage',
+      storage: createJSONStorage(() => 
+        Platform.OS === 'web' ? localStorage : AsyncStorage
+      ),
     }
   )
 )

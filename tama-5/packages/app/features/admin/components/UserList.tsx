@@ -1,9 +1,9 @@
-import type { User } from "../../types";
+import type { User } from "app/stores/types";
 import { MyDatePicker } from "app/components/DatePicker/component";
 import { getBaseUrl } from "app/utils/util";
 import { useState, useEffect } from "react";
 import { Paragraph, YStack, Spinner, ScrollView } from "tamagui";
-import { UserComp } from "app/features/main/components/admin/User"
+import { UserComp } from "app/features/admin/components/User"
 import { Platform } from "react-native";
 
 export const UserList = () => {
@@ -75,21 +75,15 @@ export const UserList = () => {
     })
   }
   return (
-    <YStack f={1} width="100%" minHeight={Platform.OS === 'web' ? '100dvh' : '100%'}>
-      
-      {/* 1. Шапка (фиксированная) */}
+    <YStack f={1} width="100%" p={Platform.OS === "web" ? "$4" : "$0"} pb="$10" minHeight={Platform.OS === 'web' ? '100dvh' : '100%'}>
       <YStack p="$4" bg="$background" borderBottomWidth={1} bc="$borderColor">
         <MyDatePicker currentDate={date} onDateChange={handleDateChange} />
       </YStack>
-
-      {/* 2. Скролл-зона */}
-      {/* На вебе используем просто YStack со скроллом, на нативе - ScrollView */}
       {Platform.OS === 'web' ? (
         <YStack 
           f={1} 
           width="100%" 
-          style={{ overflowY: 'auto' }} // Чистый CSS скролл для браузера
-          p="$4"
+          style={{ overflowY: 'auto' }}
         >
            <YStack space="$3" pb="$10">
               {loading ? <Spinner size="large" color="$blue10" p="$4" /> : RenderUsers()}
@@ -102,7 +96,6 @@ export const UserList = () => {
           </YStack>
         </ScrollView>
       )}
-
       {error && (
         <Paragraph pos="absolute" bottom={20} alignSelf="center" color="$red10" bg="$background" p="$2" br="$2">
           {error}

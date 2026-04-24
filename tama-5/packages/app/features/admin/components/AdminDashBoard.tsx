@@ -1,5 +1,6 @@
 import { getBaseUrl } from "app/utils/util";
 import { YStack, H2, Paragraph } from "tamagui";
+import { UserList } from "./UserList"
 
 export const AdminDashboard = () => {
   const createUser = async () => {
@@ -29,11 +30,14 @@ export const AdminDashboard = () => {
   };
 
   return (
-    <YStack space="$4" p="$4" alignItems="center">
-      { /*<Button mb="$4" onPress={() => alert("Заглушка.Запрос в коде!")}>Добавить пользователя</Button>*/}
-      {/*<Button mb="$4" onPress={() => createUser()}>Добавить пользователя</Button>*/}
-      <H2>Панель администратора</H2>
-      <Paragraph>Список всех пользователей системы:</Paragraph>
-    </YStack>
+    <>
+      <YStack space="$4" p="$4" alignItems="center">
+        { /*<Button mb="$4" onPress={() => alert("Заглушка.Запрос в коде!")}>Добавить пользователя</Button>*/}
+        {/*<Button mb="$4" onPress={() => createUser()}>Добавить пользователя</Button>*/}
+        <H2>Панель администратора</H2>
+        <Paragraph>Список всех пользователей системы:</Paragraph>
+      </YStack>
+      <UserList />
+    </>
   )
 }

@@ -19,7 +19,14 @@ export function NavigationProvider({
             screens: {
               main: "",
               auth: "/auth",
-              checkin: "/checkin"
+              checkin: "/checkin",
+              settings: "/settings",
+              useredit: {
+                path: 'useredit/:id',
+                parse: {
+                  id: (id: number) => `${id}`,
+                },
+              },
             },
           },
         }) as any,

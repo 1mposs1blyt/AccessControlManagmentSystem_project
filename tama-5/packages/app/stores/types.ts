@@ -16,3 +16,8 @@ export interface User {
   cardId: string
   checkins: Checkin[]
 }
+export interface UserState {
+  users: User[]
+  setUsers: (users: User[]) => void
+  updateUser: (id: number, data: Partial<User>) => void
+}

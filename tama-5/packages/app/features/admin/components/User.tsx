@@ -1,10 +1,13 @@
 import { getBaseUrl } from "app/utils/util"
-import { YStack, XStack,Button, SizableText } from "tamagui"
-import type { User } from "../../types"
+import { YStack, XStack, Button, SizableText } from "tamagui"
+import type { User } from "app/stores/types"
+import { useLink, useRouter } from "solito/navigation"
+
 export const UserComp = ({ u, onStatusUpdate, selectedDate }: { u: User, onStatusUpdate: any, selectedDate: Date }) => {
   const lastCheckin = u.checkins && u.checkins.length > 0 ? u.checkins[0] : null
-  const isPresent = !!lastCheckin?.type 
+  const isPresent = !!lastCheckin?.type
   const Type = lastCheckin?.type
+  const { push } = useRouter()
   const handleCheckin = async (userId: number, type: 'IN' | 'OUT' | 'NONE') => {
     try {
       const dateToSave = new Date(selectedDate)
@@ -36,6 +39,9 @@ export const UserComp = ({ u, onStatusUpdate, selectedDate }: { u: User, onStatu
     }
   }
   const isAdmin = u.role === 'ADMIN'
+  const link = useLink({
+    href: `/useredit/${u.id}`,
+  })
   return (
     <YStack
       bw={isPresent ? 2 : 0}
@@ -66,6 +72,13 @@ export const UserComp = ({ u, onStatusUpdate, selectedDate }: { u: User, onStatu
                     'Нет на месте'
                     : "Администратор"
             }
+          </SizableText>
+          <SizableText size="$2" color="$colorSubtitle">
+            {
+              isAdmin ? ""
+                : `Id карты-пропуска: ${u.cardId ? u.cardId : "отсутсвует"}`
+            }
+
           </SizableText>
         </YStack>
         <SizableText
@@ -115,8 +128,12 @@ export const UserComp = ({ u, onStatusUpdate, selectedDate }: { u: User, onStatu
         </XStack>
 
         <XStack space="$2">
-          <Button size="$3" circular icon={<SizableText>✎</SizableText>} />
-          <Button size="$3" circular theme="red" icon={<SizableText>🗑</SizableText>} />
+          <Button
+            onPress={link.onPress}
+            size="$3"
+            circular
+            icon={<SizableText>✎</SizableText>} />
+          {/* <Button size="$3" circular theme="red" icon={<SizableText>🗑</SizableText>} /> */}
         </XStack>
 
       </XStack>

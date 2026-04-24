@@ -5,17 +5,22 @@ import { MainScreen } from 'app/features/main/screen'
 import { useTheme } from 'tamagui'
 import { useState, useEffect } from "react"
 import { useAuthStore } from 'app/stores/store'
+import { Button } from 'tamagui'
+import { SettingsScreen } from 'app/features/settings/screen'
+import { UserEditScreen } from 'app/features/useredit/screen'
 const Stack = createNativeStackNavigator<{
   main: undefined
   auth: undefined
   checkin: undefined
+  settings: undefined
+  useredit: { id: string }
 }>()
 
 export function NativeNavigation() {
   const theme = useTheme()
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated)
   const [isReady, setIsReady] = useState(false)
-
+  const logout = useAuthStore((state) => state.logout)
   useEffect(() => {
     setIsReady(true)
   }, [])
@@ -34,12 +39,39 @@ export function NativeNavigation() {
             <Stack.Screen
               name="main"
               component={MainScreen}
-              options={{ title: 'Home' }}
+              options={{
+                title: 'Home',
+                headerRight: () => (
+                  <Button m="$4"
+                    color="$red10" bg="$red5"
+                    animation="bouncy"
+                    pressStyle={{
+                      bg: "$red8",
+                      scale: 0.99,
+                      color: "white"
+                    }}
+                    hoverStyle={{
+                      bg: "$red6",
+                      scale: 0.99,
+                      color: "white"
+                    }}
+                    onPress={logout}>
+                    Выход
+                  </Button>
+                )
+              }}
             />
             <Stack.Screen
               name="checkin"
               component={CheckinScreen}
               options={{ title: 'Auth' }}
+            />
+            <Stack.Screen
+              name="useredit"
+              component={UserEditScreen}
+              options={{
+                title: "User edit"
+              }}
             />
           </>
         ) : (
