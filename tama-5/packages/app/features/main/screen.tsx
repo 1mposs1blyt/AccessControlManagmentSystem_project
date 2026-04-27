@@ -5,7 +5,7 @@ import { SizableText } from "tamagui"
 import { XStack, H4 } from "tamagui"
 import { Platform } from "react-native"
 
-import { AdminScreen } from "app/features/admin/screen"
+import { AdminScreen } from "app/features/userlist/screen"
 import { CheckinScreen } from "app/features/checkin/screen"
 
 export function MainScreen() {
@@ -16,7 +16,7 @@ export function MainScreen() {
       {
         Platform.OS === "web" ? (
           <XStack p="$4" jc="space-between" ai="center" bbw={1} bc="$borderColor">
-            <H4>Панель доступа</H4>
+            <H4>Панель администратора</H4>
             {
               user?.role === "ADMIN" ? (
                 <SizableText size="$2">Вы вошли как {user?.role == "ADMIN" ? "администратор" : ""}</SizableText>

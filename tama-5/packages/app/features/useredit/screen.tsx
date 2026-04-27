@@ -1,44 +1,17 @@
 'use client'
 import { useParams, useRouter } from 'solito/navigation'
 import { useEffect, useState } from 'react'
-import { YStack, XStack, Input, SizableText, Button, Label, ScrollView, Spinner } from 'tamagui'
+import { YStack, XStack, SizableText, Button, ScrollView, Spinner } from 'tamagui'
 import { useUserStore } from 'app/stores/store'
 import { Platform } from 'react-native'
 import { H4 } from 'tamagui'
 import { getBaseUrl } from 'app/utils/util'
-const EditField = ({ label, field, currentValue, isPassword = false, formData, setFormData }: any) => (
-	<YStack space="$1" width="100%" maxWidth={400}>
-		<XStack jc="space-between" ai="center">
-			<Label size="$2" theme="alt1">{label}:</Label>
-			<SizableText size="$2" color="$colorFocus">
-				{isPassword ? "********" : (currentValue || '—')}
-			</SizableText>
-		</XStack>
-		<Input
-			size="$3"
-			secureTextEntry={isPassword}
-			value={formData[field] || ''}
-			onChangeText={(text: string) => setFormData({ ...formData, [field]: text })}
-			placeholder={`Новое значение...`}
+import { EditField } from './components/EditField'
 
-			// Вот эти правки для нормального вида:
-			bw={1}                   // Толщина границы
-			bc="$borderColor"        // Цвет границы из темы (или "$gray5")
-			bg="$background"         // Фон как у всей страницы (белый/темный)
-			color="$color"           // Цвет текста из темы
-			focusStyle={{            // Стиль при нажатии
-				bc: "$blue10",
-				bw: 2
-			}}
-			placeholderTextColor="$gray10" // Чтобы плейсхолдер был серым, а не черным
-		/>
-	</YStack>
-)
 
 export function UserEditScreen({ route }: any) {
 	const { push, back } = useRouter()
 	const params = useParams<{ id: string }>()
-	const rawPath = route?.path || ''
 
 	const id = Platform.OS === 'web'
 		? params?.id
@@ -97,6 +70,7 @@ export function UserEditScreen({ route }: any) {
 			setFormData({})
 
 			alert('Данные успешно обновлены!')
+			back()
 		} else {
 			const errorData = await res.json()
 			alert(`Ошибка: ${errorData.error || 'Не удалось сохранить'}`)

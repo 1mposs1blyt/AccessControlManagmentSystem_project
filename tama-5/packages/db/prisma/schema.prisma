@@ -27,7 +27,7 @@ model Checkin {
   createdAt  DateTime  @default(now())
   type       CheckinType @default(NONE)
   userId     Int
-  user       User      @relation(fields: [userId], references: [id])
+  user       User      @relation(fields: [userId], references: [id],onDelete: Cascade)
   location   String?
   method     AccessMethod
 }

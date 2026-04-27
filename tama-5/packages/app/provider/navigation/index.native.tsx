@@ -17,7 +17,7 @@ export function NavigationProvider({
           prefixes: [Linking.createURL('/')],
           config: {
             screens: {
-              main: "",
+              main: "/",
               auth: "/auth",
               checkin: "/checkin",
               settings: "/settings",
@@ -27,6 +27,7 @@ export function NavigationProvider({
                   id: (id: number) => `${id}`,
                 },
               },
+              createuser:"/createuser"
             },
           },
         }) as any,

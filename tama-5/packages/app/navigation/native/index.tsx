@@ -6,14 +6,15 @@ import { useTheme } from 'tamagui'
 import { useState, useEffect } from "react"
 import { useAuthStore } from 'app/stores/store'
 import { Button } from 'tamagui'
-import { SettingsScreen } from 'app/features/settings/screen'
 import { UserEditScreen } from 'app/features/useredit/screen'
+import { UserCreationScreen } from 'app/features/usercreate/screen'
 const Stack = createNativeStackNavigator<{
   main: undefined
   auth: undefined
   checkin: undefined
   settings: undefined
   useredit: { id: string }
+  createuser: undefined
 }>()
 
 export function NativeNavigation() {
@@ -71,6 +72,13 @@ export function NativeNavigation() {
               component={UserEditScreen}
               options={{
                 title: "User edit"
+              }}
+            />
+            <Stack.Screen
+              name="createuser"
+              component={UserCreationScreen}
+              options={{
+                title: "Create user"
               }}
             />
           </>

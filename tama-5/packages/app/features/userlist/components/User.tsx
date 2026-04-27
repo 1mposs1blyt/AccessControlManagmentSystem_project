@@ -1,13 +1,23 @@
 import { getBaseUrl } from "app/utils/util"
 import { YStack, XStack, Button, SizableText } from "tamagui"
 import type { User } from "app/stores/types"
-import { useLink, useRouter } from "solito/navigation"
+import { useLink } from "solito/navigation"
 
-export const UserComp = ({ u, onStatusUpdate, selectedDate }: { u: User, onStatusUpdate: any, selectedDate: Date }) => {
+export const UserComp = (
+  { u,
+    onStatusUpdate,
+    selectedDate,
+    refreshList
+  }: {
+    u: User,
+    onStatusUpdate: any,
+    selectedDate: Date,
+    refreshList: () => void
+  }
+) => {
   const lastCheckin = u.checkins && u.checkins.length > 0 ? u.checkins[0] : null
   const isPresent = !!lastCheckin?.type
   const Type = lastCheckin?.type
-  const { push } = useRouter()
   const handleCheckin = async (userId: number, type: 'IN' | 'OUT' | 'NONE') => {
     try {
       const dateToSave = new Date(selectedDate)
@@ -42,6 +52,26 @@ export const UserComp = ({ u, onStatusUpdate, selectedDate }: { u: User, onStatu
   const link = useLink({
     href: `/useredit/${u.id}`,
   })
+  const DeleteUser = async (id: number) => {
+    try {
+      const res = await fetch(`${getBaseUrl()}/api/users/delete`, {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ userId: id })
+      })
+
+      const data = await res.json()
+
+      if (!res.ok) {
+        throw new Error(data.error || 'Ошибка удаления')
+      }
+      if (res.ok) refreshList()
+      alert('Удалено успешно!')
+      // Тут не забудь обновить список в Zustand или вызвать fetch снова
+    } catch (err: any) {
+      alert(`Ошибка: ${err.message}`)
+    }
+  }
   return (
     <YStack
       bw={isPresent ? 2 : 0}
@@ -69,7 +99,7 @@ export const UserComp = ({ u, onStatusUpdate, selectedDate }: { u: User, onStatu
                 Type === "OUT" ?
                   `Отмечечен в ${new Date(lastCheckin!.createdAt).toLocaleTimeString()}`
                   : !isAdmin ?
-                    'Нет на месте'
+                    'Не отмечен'
                     : "Администратор"
             }
           </SizableText>
@@ -133,7 +163,12 @@ export const UserComp = ({ u, onStatusUpdate, selectedDate }: { u: User, onStatu
             size="$3"
             circular
             icon={<SizableText>✎</SizableText>} />
-          {/* <Button size="$3" circular theme="red" icon={<SizableText>🗑</SizableText>} /> */}
+          <Button
+            onPress={() => { DeleteUser(u.id) }}
+            size="$3"
+            circular
+            theme="red"
+            icon={<SizableText>🗑</SizableText>} />
         </XStack>
 
       </XStack>

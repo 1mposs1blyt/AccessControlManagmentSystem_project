@@ -2,14 +2,9 @@ import { create } from 'zustand'
 import { persist, createJSONStorage } from 'zustand/middleware'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { Platform } from 'react-native'
-import { User, UserState } from 'app/stores/types'
+import { AuthState, User, UserState } from 'app/stores/types'
 
-interface AuthState {
-  isAuthenticated: boolean
-  user: any | null
-  login: (userData: any) => void
-  logout: () => void
-}
+
 
 export const useAuthStore = create<AuthState>()(
   persist(
@@ -40,7 +35,16 @@ export const useUserStore = create<UserState>()(
   persist(
     (set) => ({
       users: [],
+      // Инициализируем нулем
+      refreshSignal: 0,
+
       setUsers: (users) => set({ users }),
+
+      // Метод для "пинка" списка
+      triggerRefresh: () => set((state) => ({
+        refreshSignal: state.refreshSignal + 1
+      })),
+
       updateUser: (id, data) =>
         set((state) => ({
           users: state.users.map((u) => (u.id === id ? { ...u, ...data } : u)),
@@ -48,9 +52,11 @@ export const useUserStore = create<UserState>()(
     }),
     {
       name: 'users-storage',
-      storage: createJSONStorage(() => 
+      storage: createJSONStorage(() =>
         Platform.OS === 'web' ? localStorage : AsyncStorage
       ),
+      // ВАЖНО: исключи сигнал из сохранения, чтобы он всегда был 0 при запуске
+      partialize: (state) => ({ users: state.users }),
     }
   )
 )

@@ -1,6 +1,5 @@
 'use client'
-import React from 'react'
-import { Button, XStack, YStack, View, SizableText } from 'tamagui'
+import { Button, XStack, YStack, View } from 'tamagui'
 import { Calendar, ChevronLeft, ChevronRight } from '@tamagui/lucide-icons'
 import { Platform } from 'react-native'
 
