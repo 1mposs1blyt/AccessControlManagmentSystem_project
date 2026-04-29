@@ -3,7 +3,7 @@
     "name": "ACMS",
     "slug": "acms-app",
     "version": "1.0.0",
-    "scheme": "ACMS",
+    "scheme": "acms",
     "icon": "./assets/icon.png",
     "platforms": [
       "ios",
