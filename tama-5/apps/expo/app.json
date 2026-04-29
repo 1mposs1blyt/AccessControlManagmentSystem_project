@@ -4,6 +4,7 @@
     "slug": "solito-blank",
     "version": "1.0.0",
     "scheme": "ACMS",
+    "icon": "./assets/icon.png",
     "platforms": [
       "ios",
       "android"
@@ -11,9 +12,14 @@
     "userInterfaceStyle": "automatic",
     "android": {
       "package": "com.alex.tama5",
-      "userInterfaceStyle": "automatic"
+      "userInterfaceStyle": "automatic",
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/icon.png",
+        "backgroundColor": "#ffffff"
+      }
     },
     "ios": {
+      "icon": "./assets/icon.png",
       "supportsTablet": true,
       "userInterfaceStyle": "automatic",
       "bundleIdentifier": "com.alex.tama5"
