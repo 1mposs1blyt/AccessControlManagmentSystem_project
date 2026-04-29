@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "ACMS",
-    "slug": "solito-blank",
+    "slug": "acms-app",
     "version": "1.0.0",
     "scheme": "ACMS",
     "icon": "./assets/icon.png",
@@ -33,9 +33,9 @@
     ],
     "extra": {
       "eas": {
-        "projectId": "a5fbe4ea-215a-4b16-9932-8674a984104a"
+        "projectId": "0755fe83-ac82-4841-b44c-fc15588a27ae"
       }
     },
-    "owner": "1mposs1bl3"
+    "owner": "1mp0ss1ble"
   }
 }
