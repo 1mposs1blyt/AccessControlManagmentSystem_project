@@ -21,6 +21,7 @@
     "expo-linking": "~8.0.12",
     "expo-splash-screen": "~31.0.10",
     "expo-status-bar": "~3.0.8",
+    "fix": "^0.0.6",
     "getenv": "^2.0.0",
     "moti": "^0.30.0",
     "react": "19.1.0",
