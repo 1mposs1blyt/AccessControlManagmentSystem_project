@@ -32,11 +32,13 @@ const path = require('path')
 
 const projectRoot = __dirname
 const workspaceRoot = path.resolve(projectRoot, '../..')
-
 const config = getDefaultConfig(projectRoot)
 
 // 1. Указываем Metro следить за всем монорепозиторием
-config.watchFolders = [workspaceRoot]
+config.watchFolders = [
+  workspaceRoot, 
+  ...config.watchFolders // Добавляем дефолтные папки Expo обратно
+]
 
 // 2. Помогаем Metro найти node_modules
 config.resolver.nodeModulesPaths = [
@@ -45,6 +47,6 @@ config.resolver.nodeModulesPaths = [
 ]
 
 // 3. Важно для Tamagui: выключаем иерархический поиск
-config.resolver.disableHierarchicalLookup = true
+config.resolver.disableHierarchicalLookup = false
 
 module.exports = config
