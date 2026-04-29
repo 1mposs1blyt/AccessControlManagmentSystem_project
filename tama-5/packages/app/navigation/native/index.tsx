@@ -4,9 +4,10 @@ import { MainScreen } from 'app/features/main/screen'
 import { useTheme } from 'tamagui'
 import { useState, useEffect } from "react"
 import { useAuthStore } from 'app/stores/store'
-import { Button } from 'tamagui'
+import { Button, SizableText } from 'tamagui'
 import { UserEditScreen } from 'app/features/useredit/screen'
 import { UserCreationScreen } from 'app/features/usercreate/screen'
+import { Platform } from 'react-native'
 const Stack = createNativeStackNavigator<{
   main: undefined
   auth: undefined
@@ -42,8 +43,11 @@ export function NativeNavigation() {
               options={{
                 title: 'Home',
                 headerRight: () => (
-                  <Button m="$4"
-                    color="$red10" bg="$red5"
+                  <Button
+                    size={Platform.OS === 'ios' ? '$2.5' : '$4'}
+                    marginRight={Platform.OS === 'ios' ? '$0' : '$4'}
+                    color="$red10" 
+                    bg="$red5"
                     animation="bouncy"
                     pressStyle={{
                       bg: "$red8",
