@@ -5,7 +5,6 @@ export async function POST(request: Request) {
   try {
     const { qrData, userId, type } = await request.json()
 
-    // Можно расшифровать qrData, чтобы убедиться, что это наш QR
     const decodedQr = Buffer.from(qrData, 'base64').toString('utf-8')
     const qrInfo = JSON.parse(decodedQr)
 
@@ -15,7 +14,7 @@ export async function POST(request: Request) {
 
     const newCheckin = await prisma.checkin.create({
       data: {
-        userId: userId, // Используем ID, который прислал Zustand
+        userId: userId,
         type: type || 'IN',
         method: 'QR_CODE',
         location: qrInfo.locationId || 'Main Office',

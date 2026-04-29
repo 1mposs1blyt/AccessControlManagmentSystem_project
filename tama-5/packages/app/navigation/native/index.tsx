@@ -1,6 +1,5 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { AuthScreen } from 'app/features/auth/screen'
-import { CheckinScreen } from 'app/features/checkin/screen'
 import { MainScreen } from 'app/features/main/screen'
 import { useTheme } from 'tamagui'
 import { useState, useEffect } from "react"
@@ -61,11 +60,6 @@ export function NativeNavigation() {
                   </Button>
                 )
               }}
-            />
-            <Stack.Screen
-              name="checkin"
-              component={CheckinScreen}
-              options={{ title: 'Auth' }}
             />
             <Stack.Screen
               name="useredit"

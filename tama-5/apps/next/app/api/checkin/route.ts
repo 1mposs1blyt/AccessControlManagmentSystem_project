@@ -23,3 +23,24 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: 'Не удалось создать отметку' }, { status: 500 })
   }
 }
+export const dynamic = 'force-dynamic' // Отключает кэширование на уровне сборки
+
+export async function GET(request: Request) {
+  try {
+    const { searchParams } = new URL(request.url)
+    const userId = searchParams.get('userId')
+
+    if (!userId) {
+      return NextResponse.json({ success: false, error: 'userId is required' }, { status: 400 })
+    }
+
+    const checkins = await prisma.checkin.findMany({
+      where: { userId: Number(userId) },
+      orderBy: { createdAt: 'desc' },
+    })
+
+    return NextResponse.json({ success: true, data: checkins })
+  } catch (error) {
+    return NextResponse.json({ success: false, error: 'Internal Server Error' }, { status: 500 })
+  }
+}
