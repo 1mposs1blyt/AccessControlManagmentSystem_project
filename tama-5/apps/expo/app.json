@@ -1,9 +1,9 @@
 {
   "expo": {
-    "name": "solito-blank",
+    "name": "ACMS",
     "slug": "solito-blank",
     "version": "1.0.0",
-    "scheme": "solito-blank",
+    "scheme": "ACMS",
     "platforms": [
       "ios",
       "android"
@@ -24,6 +24,12 @@
     },
     "plugins": [
       "expo-asset"
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "a5fbe4ea-215a-4b16-9932-8674a984104a"
+      }
+    },
+    "owner": "1mposs1bl3"
   }
 }

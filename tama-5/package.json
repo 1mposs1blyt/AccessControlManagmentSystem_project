@@ -1,5 +1,5 @@
 {
-  "name": "solito-blank",
+  "name": "acms-app",
   "private": true,
   "workspaces": [
     "apps/*",
