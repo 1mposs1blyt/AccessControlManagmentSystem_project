@@ -54,7 +54,7 @@ export function UserAttendanceStats() {
 					{stats.in}
 				</SizableText>
 				<SizableText size="$1" theme="alt2" ta="center" tt="uppercase" lsp={1}>
-					Отмечен
+					Посещений
 				</SizableText>
 			</YStack>
 			<Separator vertical h={30} />
@@ -63,18 +63,18 @@ export function UserAttendanceStats() {
 					{stats.out}
 				</SizableText>
 				<SizableText size="$1" theme="alt2" ta="center" tt="uppercase" lsp={1}>
-					Пропустил
+					Пропусков
 				</SizableText>
 			</YStack>
 			<Separator vertical h={30} />
-			<YStack ai="center" f={1}>
+			{/* <YStack ai="center" f={1}>
 				<SizableText fontWeight="800" color="$gray10" size="$6">
 					{stats.none}
 				</SizableText>
 				<SizableText size="$1" theme="alt2" ta="center" tt="uppercase" lsp={1}>
 					Отсутствие
 				</SizableText>
-			</YStack>
+			</YStack> */}
 		</XStack>
 	)
 }
