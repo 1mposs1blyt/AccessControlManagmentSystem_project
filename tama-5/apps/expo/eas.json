@@ -12,6 +12,7 @@
       "android": {
         "buildType": "apk"
       },
+      "node": "22.11.0",
       "distribution": "internal"
     },
     "production": {
