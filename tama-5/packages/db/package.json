@@ -9,7 +9,7 @@
 		"migrate": "prisma migrate dev",
 		"studio": "prisma studio",
 		"localdb": "prisma dev",
-		"reset":"prisma migrate reset"
+		"reset": "prisma migrate reset"
 	},
 	"dependencies": {
 		"@prisma/adapter-pg": "^7.7.0",

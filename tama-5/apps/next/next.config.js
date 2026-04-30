@@ -101,7 +101,7 @@ const withTurpopack = {
  * @type {import('next').NextConfig}
  */
 const nextConfig = {
-  allowedDevOrigins: ['10.1.30.203', '192.168.0.100', "*"],
+  allowedDevOrigins: ['10.1.30.203', '192.168.0.100','10.1.30.210', "*"],
   transpilePackages: [
     'solito',
     'expo-haptics',

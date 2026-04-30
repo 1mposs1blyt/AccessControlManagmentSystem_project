@@ -23,3 +23,5 @@
 * Frontend - интерфейс обновляется без перезагрузки страницы
 * DevOps -  сборка работоспособна + обновлен этот файл
 
+## Презентация 
+#### https://docs.google.com/presentation/d/e/2PACX-1vQALVXMyoxdmZXQScJaN8veSNwDcPhwW1SKV9v2d1FZzEAS-x2B3pnR3aVwMTRjPKW5YOSY3mm_4WSH/pub?start=false&loop=false&delayms=3000
